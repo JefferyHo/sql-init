@@ -9,7 +9,7 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
   app.useGlobalFilters(new RequestExceptionFilter());
   app.useGlobalInterceptors(new RequestInterceptorInterceptor());
-  app.setGlobalPrefix('sql-init');
+  app.setGlobalPrefix('api');
   await app.listen(3000);
 }
 bootstrap();

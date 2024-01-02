@@ -13,7 +13,7 @@ export class RequestInterceptorInterceptor implements NestInterceptor {
       map((data) => {
         return {
           data,
-          code: 200,
+          code: 0,
           message: 'success',
         };
       }),

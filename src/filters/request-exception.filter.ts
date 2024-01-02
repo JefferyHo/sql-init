@@ -26,7 +26,7 @@ export class RequestExceptionFilter implements ExceptionFilter {
     Params: ${JSON.stringify(request.params)}
     Query: ${JSON.stringify(request.query)}
     Body: ${JSON.stringify(request.body)}
-    Exception: ${message}
+    Response: ${exception.toString()}
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>`;
     Logger.error(logFormat);
 
