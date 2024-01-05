@@ -1,21 +1,17 @@
-## TODO
 
 > https://juejin.cn/post/7247059220143177783?searchId=2023122919554640BCCCE5C2F2DFFD15E8
 
-1. class-validator
-  1. *.dto文件增加类型判断
+# Features
 
-  2. main.ts useGlobalPipe
+- [x] user - crud operation
+- [x] support mysql
+- [x] support class-validator
+- [x] support log4js
+- [x] support swagger
 
-2. log本地化存储
+## Todo
+- [ ] jwt authorization
 
-Todo：
-
-1. user - login
-redis
-[option] check logined -> kick out the old
-
-3. 配置 Swagger API 文档
 
 
 问题：
