@@ -1,3 +1,4 @@
+import { Exclude } from 'class-transformer';
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -5,6 +6,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   DeleteDateColumn,
+  BeforeInsert,
 } from 'typeorm';
 
 @Entity()
@@ -12,14 +14,24 @@ export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @Column({ length: 30 })
+  username: string;
+
+  @Column({ length: 30 })
+  nickname: string;
+
+  @Exclude()
   @Column()
-  name: string;
+  password: string;
 
   @Column()
-  sex: number;
+  avatar: string;
 
   @Column()
-  age: number;
+  email: string;
+
+  @Column('simple-enum', { enum: ['manager', 'user', 'visitor'] })
+  role: string;
 
   @CreateDateColumn({ type: 'timestamp', name: 'create_at' })
   createTime: Date;
@@ -27,9 +39,11 @@ export class User {
   @UpdateDateColumn({ type: 'timestamp', name: 'update_at' })
   updateTime: Date;
 
-  // @Column({ default: false })
-  // isDelete: boolean;
-
   @DeleteDateColumn({ type: 'timestamp', name: 'deleted_at' })
   deletedAt: Date;
+
+  @BeforeInsert()
+  async encryptPwd() {
+    this.password = await this.password;
+  }
 }

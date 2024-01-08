@@ -1,7 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
+  IsEmail,
   IsInt,
   IsNumber,
+  IsOptional,
   IsString,
   Max,
   MaxLength,
@@ -13,17 +15,27 @@ export class CreateUserDto {
   @ApiProperty({ description: '用户名' })
   @IsString()
   @MinLength(1)
-  @MaxLength(20)
-  readonly name: string;
+  @MaxLength(30)
+  readonly username: string;
 
-  // @IsEnum(user.Sex)
-  @ApiProperty({ description: '性别(0-男, 1-女）' })
-  @IsNumber()
-  readonly sex: number;
+  @ApiProperty({ description: '昵称' })
+  @IsOptional()
+  @IsString()
+  @MinLength(1)
+  @MaxLength(30)
+  readonly nickname: string;
 
-  @ApiProperty({ description: '年龄' })
-  @IsInt()
-  @Min(0)
-  @Max(200)
-  readonly age: number;
+  @ApiProperty({ description: '密码' })
+  @IsString()
+  readonly password: string;
+
+  @ApiProperty({ description: '头像' })
+  @IsOptional()
+  @IsString()
+  readonly avatar: string;
+
+  @ApiProperty({ description: '邮箱' })
+  @IsOptional()
+  @IsEmail()
+  readonly email: string;
 }
