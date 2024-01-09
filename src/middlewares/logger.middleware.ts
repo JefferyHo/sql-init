@@ -5,7 +5,7 @@ import { Logger } from '../utils/log4js';
 @Injectable()
 export class LoggerMiddleware implements NestMiddleware {
   use(req: Request, res: Response, next: NextFunction) {
-    console.log(res);
+    // console.log(res);
     const code = res.statusCode;
     next();
     const logFormat = ` 

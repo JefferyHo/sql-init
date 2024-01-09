@@ -1,4 +1,3 @@
-import { Exclude } from 'class-transformer';
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -8,6 +7,7 @@ import {
   DeleteDateColumn,
   BeforeInsert,
 } from 'typeorm';
+import { encrypt } from '../../utils/encrypt';
 
 @Entity()
 export class User {
@@ -17,20 +17,23 @@ export class User {
   @Column({ length: 30 })
   username: string;
 
-  @Column({ length: 30 })
+  @Column({ length: 30, nullable: true })
   nickname: string;
 
-  @Exclude()
-  @Column()
+  @Column({ select: false })
   password: string;
 
-  @Column()
+  @Column({ nullable: true })
   avatar: string;
 
-  @Column()
+  @Column({ nullable: true })
   email: string;
 
-  @Column('simple-enum', { enum: ['manager', 'user', 'visitor'] })
+  @Column('simple-enum', {
+    enum: ['manager', 'user', 'visitor'],
+    default: 'visitor',
+    nullable: true,
+  })
   role: string;
 
   @CreateDateColumn({ type: 'timestamp', name: 'create_at' })
@@ -44,6 +47,7 @@ export class User {
 
   @BeforeInsert()
   async encryptPwd() {
-    this.password = await this.password;
+    console.log(this);
+    this.password = await encrypt(this.password);
   }
 }

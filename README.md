@@ -11,6 +11,7 @@
 
 ## Todo
 - [ ] jwt authorization
+  `local` vs `jwt`
 
 
 

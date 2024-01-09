@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './modules/user/user.module';
 import { LoggerMiddleware } from './middlewares/logger.middleware';
+import { AuthModule } from './modules/auth/auth.module';
 import * as express from 'express';
 
 @Module({
@@ -19,6 +20,7 @@ import * as express from 'express';
       synchronize: true,
     }),
     UserModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

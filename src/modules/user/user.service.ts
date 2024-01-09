@@ -4,6 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { plainToClass } from 'class-transformer';
 
 @Injectable()
 export class UserService {
@@ -12,7 +13,8 @@ export class UserService {
   ) {}
 
   async create(createUserDto: CreateUserDto) {
-    await this.userRepository.save(createUserDto);
+    const entity = plainToClass(User, createUserDto);
+    await this.userRepository.save(entity);
     return null;
   }
 
@@ -30,8 +32,8 @@ export class UserService {
     return user;
   }
 
-  async findUserExistByName(name: string) {
-    const user: User = await this.userRepository.findOneBy({ name });
+  async findUserExistByName(username: string) {
+    const user: User = await this.userRepository.findOneBy({ username });
 
     return !!user;
   }
