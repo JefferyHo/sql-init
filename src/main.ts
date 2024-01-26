@@ -4,13 +4,16 @@ import { RequestExceptionFilter } from './filters/request-exception.filter';
 import { RequestInterceptorInterceptor } from './interceptors/request-interceptor.interceptor';
 import { ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { NestExpressApplication } from '@nestjs/platform-express';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
   app.useGlobalPipes(new ValidationPipe());
   app.useGlobalFilters(new RequestExceptionFilter());
   app.useGlobalInterceptors(new RequestInterceptorInterceptor());
   app.setGlobalPrefix('api');
+  app.useStaticAssets('static', { prefix: '/pages' });
+  app.useStaticAssets('uploads', { prefix: '/uploads' });
 
   // swagger config
   const config = new DocumentBuilder()
