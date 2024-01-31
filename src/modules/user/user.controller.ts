@@ -9,15 +9,21 @@ import {
   Query,
   ParseIntPipe,
   BadRequestException,
+  UseGuards,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { JwtAuthGuard } from '../auth/auth.guard';
+import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('用户')
 @Controller('user')
+@UseGuards(JwtAuthGuard)
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
+  @ApiOperation({ summary: '创建' })
   @Post()
   async create(@Body() createUserDto: CreateUserDto) {
     const isUseExisted = await this.userService.findByPhone(
@@ -30,6 +36,13 @@ export class UserController {
     return this.userService.create(createUserDto);
   }
 
+  @ApiOperation({ summary: '查询' })
+  @ApiParam({
+    name: 'venueId',
+    type: String,
+    description: '指定门店查询，也可以不指定',
+    required: false,
+  })
   @Get()
   async findList(
     @Query('venueId') venueId: string,
@@ -53,11 +66,13 @@ export class UserController {
     return this.userService.findByVenueId(+venueId, role);
   }
 
+  @ApiOperation({ summary: '按照ID查询' })
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.userService.findOne(+id);
   }
 
+  @ApiOperation({ summary: '更新' })
   @Patch(':id')
   async update(
     @Param('id', ParseIntPipe) id: number,
@@ -71,6 +86,7 @@ export class UserController {
     return this.userService.update(id, updateUserDto);
   }
 
+  @ApiOperation({ summary: '删除' })
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.userService.remove(+id);

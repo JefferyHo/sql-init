@@ -62,7 +62,6 @@ export class User {
 
   @BeforeInsert()
   async encryptPwd() {
-    console.log(this);
     this.password = await encrypt(this.password);
   }
 }

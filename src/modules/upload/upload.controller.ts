@@ -4,13 +4,16 @@ import {
   Post,
   Req,
   UploadedFile,
+  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { ApiTags } from '@nestjs/swagger';
 import { Request } from 'express';
 
 import { diskStorage } from 'multer';
 import * as path from 'path';
+import { JwtAuthGuard } from '../auth/auth.guard';
 
 export const fileStorage = diskStorage({
   destination: path.join(__dirname, '../../../../uploads'),
@@ -23,6 +26,8 @@ export const fileStorage = diskStorage({
   },
 });
 
+@ApiTags('公共上传')
+@UseGuards(JwtAuthGuard)
 @Controller('upload')
 export class UploadController {
   @Post('pic')

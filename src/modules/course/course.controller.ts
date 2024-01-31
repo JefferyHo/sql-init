@@ -8,13 +8,18 @@ import {
   Delete,
   Query,
   ParseIntPipe,
+  UseGuards,
 } from '@nestjs/common';
 import { CourseService } from './course.service';
 import { CreateCourseDto } from './dto/create-course.dto';
 import { UpdateCourseDto } from './dto/update-course.dto';
 import { VenueService } from '../venue/venue.service';
 import { Course } from './entities/course.entity';
+import { ApiTags } from '@nestjs/swagger';
+import { JwtAuthGuard } from '../auth/auth.guard';
 
+@ApiTags('课程')
+@UseGuards(JwtAuthGuard)
 @Controller('course')
 export class CourseController {
   constructor(

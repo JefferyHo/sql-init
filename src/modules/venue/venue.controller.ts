@@ -8,14 +8,17 @@ import {
   Delete,
   Query,
   ParseIntPipe,
+  UseGuards,
 } from '@nestjs/common';
 import { VenueService } from './venue.service';
 import { CreateVenueDto } from './dto/create-venue.dto';
 import { UpdateVenueDto } from './dto/update-venue.dto';
 import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 import { Venue } from './entities/venue.entity';
+import { JwtAuthGuard } from '../auth/auth.guard';
 
-@ApiTags('场馆')
+@ApiTags('门店')
+@UseGuards(JwtAuthGuard)
 @Controller('venue')
 export class VenueController {
   constructor(private readonly venueService: VenueService) {}
@@ -46,6 +49,7 @@ export class VenueController {
     };
   }
 
+  @ApiOperation({ summary: '查询单个' })
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.venueService.findOne(+id);

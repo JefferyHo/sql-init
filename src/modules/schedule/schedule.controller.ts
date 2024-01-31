@@ -8,11 +8,16 @@ import {
   Delete,
   Query,
   ParseIntPipe,
+  UseGuards,
 } from '@nestjs/common';
 import { ScheduleService } from './schedule.service';
 import { CreateScheduleDto } from './dto/create-schedule.dto';
 import { UpdateScheduleDto } from './dto/update-schedule.dto';
+import { ApiTags } from '@nestjs/swagger';
+import { JwtAuthGuard } from '../auth/auth.guard';
 
+@ApiTags('课程安排')
+@UseGuards(JwtAuthGuard)
 @Controller('schedule')
 export class ScheduleController {
   constructor(private readonly scheduleService: ScheduleService) {}
